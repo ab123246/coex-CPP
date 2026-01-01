@@ -12,132 +12,62 @@ IEEE/RSJ International Conference on Intelligent Robots and Systems (IROS), 2021
 
 We propose a Guided Cost volume Excitation (GCE) and top-k soft-argmax disparity regression for real-time and accurate stereo matching. 
 
-## Contents
-- [Installation](#installation)
-- [Datasets](#datasets)
-    - [Data for demo](#data-for-demo)
-    - [If you want to re-train the models](#if-you-want-to-re-train-the-models)
-    - [Data directories](#data-directories)
-- [Demo on KITTI raw data](#demo-on-kitti-raw-data)
-    - [Model zoo](#model-zoo)
-- [Re-training the model](#re-training-the-model)
-
-## Installation
-
-We recommend using [conda](https://www.anaconda.com/distribution/) for installation: 
-```bash
-conda env create -f environment.yml
-conda activate coex
+# Libtorch_install
+## 1. Install NVIDIA driver
 ```
-## Update: SceneFlow model
-
-<!-- You can download our model trained on SceneFlow dataset from here:  
-[SceneFlow weights](https://www.dropbox.com/s/c1v2r74tlbrrmsr/sceneflow.ckpt?dl=0)  
-achieving a new SceneFlow EPE of 0.596 (vs 0.69 in the paper).
-We re-trained the model for 15 epochs with a learning rate of 0.001 followed by 5 epochs with a learning rate of 0.0001, without activating the stochastic weight averaging (SWA) technique. The model is trained with a batch size of 8 and fp16 precision.  -->
-
-### Model Weights
-Our pre-trained SceneFlow weights can be downloaded via the following link:
-
-- \[[**Download SceneFlow Pre-trained Weights**](https://www.dropbox.com/s/c1v2r74tlbrrmsr/sceneflow.ckpt?dl=0)\]
-
-### Performance
-Our model achieves a new SceneFlow EPE (End-Point-Error) of 0.596, improving upon the previous EPE of 0.69 reported in the original paper.
-
-### Training Details
-
-- The model was re-trained for a total of 20 epochs: First 15 epochs were trained with a learning rate of 0.001. The last 5 epochs were trained with a learning rate of 0.0001
-- We opted not to activate the Stochastic Weight Averaging (SWA) technique during the training process.
-- Batch size: 8
-- Precision: fp16
-
-## Datasets
-
-### Data for demo
-
-For a demo of our code on the KITTI dataset, download the "\[synced+rectified data\]" from [raw KITTI data](http://www.cvlibs.net/datasets/kitti/raw_data.php). Unzip and place the extracted folders following the directory tree below. 
-       
-### If you want to re-train the models
-**Sceneflow dataset**  
-Download the *finalpass* data of the [Sceneflow dataset](https://lmb.informatik.uni-freiburg.de/resources/datasets/SceneFlowDatasets.en.html) as well as the *Disparity* data.
-
-**KITTI 2015**  
-Download [kitti15](http://www.cvlibs.net/datasets/kitti/eval_scene_flow.php?benchmark=stereo) dataset, and unzip data_scene_flow.zip, rename it as kitti15, and move it into SceneFlow directory as shown in the tree below.
-
-**KITTI 2012**  
-Download [kitti12](http://www.cvlibs.net/datasets/kitti/eval_stereo_flow.php?benchmark=stereo) dataset. Unzip data_stereo_flow.zip, rename it as kitti12, and move it into SceneFlow directory as shown in the tree below.
-
-Make sure the directory names matches the tree below so that the dataloaders can locate the files.
-
-### Data directories
-
-In our setup, the dataset is organized as follows
+sudo lshw -numeric -C display
+sudo apt purge *nvidia*
+sudo add-apt-repository ppa:graphics-drivers
+sudo apt update
+sudo apt upgrade
+ubuntu-drivers list
+sudo ubuntu-drivers install nvidia:560
 ```
-../../data
-└── datasets
-    ├── KITTI_raw
-    |   ├── 2011_09_26
-    |   │   ├── 2011_09_26_drive_0001_sync
-    |   │   ├── 2011_09_26_drive_0002_sync
-    |   |       :
-    |   |
-    |   ├── 2011_09_28
-    |   │   ├── 2011_09_28_drive_0001_sync
-    |   │   └── 2011_09_28_drive_0002_sync
-    |   |       :
-    |   |   :    
-    |
-    └── SceneFlow
-        ├── driving
-        │   ├── disparity
-        │   └── frames_finalpass
-        ├── flyingthings3d_final
-        │   ├── disparity
-        │   └── frames_finalpass
-        ├── monkaa
-        │   ├── disparity
-        │   └── frames_finalpass
-        ├── kitti12
-        │   ├── testing
-        │   └── training
-        └── kitti15
-            ├── testing
-            └── training
+Prioritize using NVIDIA GPU
+`sudo prime-select nvidia`
+## 2. Install CUDA
+Download CUDA installation runfile
+https://developer.nvidia.com/cuda-12-4-0-download-archive?target_os=Linux&target_arch=x86_64&Distribution=Ubuntu&target_version=20.04&target_type=runfile_local
+Download CUDA 12.4
+`wget https://developer.download.nvidia.com/compute/cuda/12.4.0/local_installers/cuda_12.4.0_550.54.14_linux.run`
+Install
+`sudo sh cuda_12.4.0_550.54.14_linux.run`
+Add to bashrc
+  ```
+  ##cuda 12.4
+  export PATH=/usr/local/cuda/bin${PATH:+:${PATH}}  
+  export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/usr/local/cuda-12.4/lib64/
+  export LD_LIBRARY_PATH=/usr/local/cuda/lib64:$LD_LIBRARY_PATH
+  ```
+## 3. Install cuDNN
+Follow the official website steps directly
+Official website:
+https://developer.nvidia.com/cudnn-downloads?target_os=Linux&target_arch=x86_64&Distribution=Ubuntu&target_version=20.04&target_type=deb_local
 ```
-
-## Demo on KITTI raw data
-The pretrained KITTI model is already included in './logs'.
-Run
-```bash
-python demo.py
+  wget https://developer.download.nvidia.com/compute/cudnn/9.4.0/local_installers/cudnn-local-repo-ubuntu2004-9.4.0_1.0-1_amd64.deb
+  sudo dpkg -i cudnn-local-repo-ubuntu2004-9.4.0_1.0-1_amd64.deb
+  sudo cp /var/cudnn-local-repo-ubuntu2004-9.4.0/cudnn-*-keyring.gpg /usr/share/keyrings/
+  sudo apt-get update
+  sudo apt-get -y install cudnn
 ```
-to perform stereo matching on raw kitti sequence. Here is an example result on our system with RTX 2080Ti on Ubuntu 18.04.
-
-<p align="center">
-  <img width="422" height="223" src="./imgs/coex_compress.gif" data-zoomable>
-</p>
-
-For more demo results, check out our [Project](https://antabangun.github.io/projects/CoEx/#demo) page
-
-## Re-training the model
-To re-train the model, configure './configs/stereo/cfg_yaml', e.g., batch_size, paths, device num, precision, etc. Then run
-```bash
-python stereo.py
-```
-
-## Citation
-
-If you find our work useful in your research, please consider citing our paper
-
-    @inproceedings{bangunharcana2021correlate,
-      title={Correlate-and-Excite: Real-Time Stereo Matching via Guided Cost Volume Excitation},
-      author={Bangunharcana, Antyanta and Cho, Jae Won and Lee, Seokju and Kweon, In So and Kim, Kyung-Soo and Kim, Soohyun},
-      booktitle={2021 IEEE/RSJ International Conference on Intelligent Robots and Systems (IROS)},
-      pages={3542--3548},
-      year={2021},
-      organization={IEEE}
-    }
-
-## Acknowledgements
-
-Part of the code is adopted from previous works: [PSMNet](https://github.com/JiaRenChang/PSMNet), [AANet](https://github.com/haofeixu/aanet), [GANet](https://github.com/feihuzhang/GANet), [SpixelFCN](https://github.com/fuy34/superpixel_fcn)
+Use the following command to verify correct installation
+`cat /usr/include/cudnn_version.h | grep CUDNN_MAJOR -A 2`
+reference:
+https://blog.csdn.net/weixin_45622961/article/details/136636431
+## 4. Install cudatoolkit
+## 5. Install up to date version of cmake
+### Download cmake file and extract
+cmake website:
+https://cmake.org/download/
+### Make file and install
+`make ./configure`
+`make -j8`
+`sudo make install`
+reference:
+https://blog.csdn.net/qq21497936/article/details/141933927
+## Do the cmake command with respect to absolute path to the PyTorch C++ API
+`cmake -DCAFFE2_USE_CUDNN=True -DCMAKE_PREFIX_PATH=/home/ab123/libtorch/libtorch ..`
+## Do the make command
+`make`
+## Run the code
+`./main`
