@@ -36,9 +36,13 @@ Prioritize using NVIDIA GPU
 ## 2. Install CUDA
 Download CUDA installation runfile
 https://developer.nvidia.com/cuda-12-4-0-download-archive?target_os=Linux&target_arch=x86_64&Distribution=Ubuntu&target_version=20.04&target_type=runfile_local
+
 Download CUDA 12.4
+
 `wget https://developer.download.nvidia.com/compute/cuda/12.4.0/local_installers/cuda_12.4.0_550.54.14_linux.run`
+
 Install
+
 `sudo sh cuda_12.4.0_550.54.14_linux.run`
 
 Add this lines to bashrc
