@@ -40,7 +40,9 @@ Download CUDA 12.4
 `wget https://developer.download.nvidia.com/compute/cuda/12.4.0/local_installers/cuda_12.4.0_550.54.14_linux.run`
 Install
 `sudo sh cuda_12.4.0_550.54.14_linux.run`
-Add to bashrc
+
+Add this lines to bashrc
+
   ```
   ##cuda 12.4
   export PATH=/usr/local/cuda/bin${PATH:+:${PATH}}  
