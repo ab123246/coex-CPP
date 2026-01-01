@@ -12,6 +12,13 @@ IEEE/RSJ International Conference on Intelligent Robots and Systems (IROS), 2021
 
 We propose a Guided Cost volume Excitation (GCE) and top-k soft-argmax disparity regression for real-time and accurate stereo matching. 
 
+# Run CoEx CPP Version
+## 	Do the cmake command with respect to absolute path to the PyTorch C++ API
+`cmake -DCAFFE2_USE_CUDNN=True -DCMAKE_PREFIX_PATH=/home/Username/libtorch/libtorch ..`
+
+## 	Do the make command
+`make`
+
 # Libtorch_install
 ## 1. Install NVIDIA driver
 ```
@@ -65,9 +72,9 @@ https://cmake.org/download/
 `sudo make install`
 reference:
 https://blog.csdn.net/qq21497936/article/details/141933927
-## Do the cmake command with respect to absolute path to the PyTorch C++ API
-`cmake -DCAFFE2_USE_CUDNN=True -DCMAKE_PREFIX_PATH=/home/ab123/libtorch/libtorch ..`
-## Do the make command
+## Run the cmake command with respect to absolute path to the PyTorch C++ API
+`cmake -DCAFFE2_USE_CUDNN=True -DCMAKE_PREFIX_PATH=/home/Username/libtorch/libtorch ..`
+## Run the make command
 `make`
 ## Run the code
 `./main`
