@@ -69,7 +69,9 @@ cmake website:
 https://cmake.org/download/
 ### Make file and install
 `make ./configure`
+
 `make -j8`
+
 `sudo make install`
 reference:
 https://blog.csdn.net/qq21497936/article/details/141933927
