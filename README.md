@@ -13,10 +13,11 @@ IEEE/RSJ International Conference on Intelligent Robots and Systems (IROS), 2021
 We propose a Guided Cost volume Excitation (GCE) and top-k soft-argmax disparity regression for real-time and accurate stereo matching. 
 
 # Run CoEx CPP Version
-## 	Run the cmake command with respect to absolute path to the PyTorch C++ API
+## 1. open coex_CPP_version file
+## 	2. Run the cmake command with respect to absolute path to the PyTorch C++ API
 `cmake -DCAFFE2_USE_CUDNN=True -DCMAKE_PREFIX_PATH=/home/Username/libtorch/libtorch ..`
 
-## 	Run the make command
+## 	3. Run the make command
 `make`
 
 # Libtorch_install
