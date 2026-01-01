@@ -3,7 +3,6 @@
 #include <opencv2/opencv.hpp>
 #include <iostream>
 #include <memory>
-#include "stixel_world.h"
 // 全域變數，用於鼠標回調函數訪問
 cv::Mat disp;
 
