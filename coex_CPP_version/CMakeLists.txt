@@ -22,8 +22,6 @@ if (OPENMP_FOUND)
     set (CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${OpenMP_CXX_FLAGS}")
 endif()
 
-# 把 stixel_world.cpp 檔案加入可執行檔
-add_executable(main main.cpp stixel_world.cpp)
 
 # 鏈接必要的庫
 target_link_libraries(main "${TORCH_LIBRARIES}")
